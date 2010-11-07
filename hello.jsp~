@@ -1,0 +1,78 @@
+<%@ page import="java.io.*,java.util.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+
+</head>
+<body>
+
+
+<script type="text/javascript">
+for(i=0;i<5;i++)
+document.write(i);
+var msg = "" ;
+document.write("hi");
+document.write(i);
+</script>
+hello
+</body>
+</html>
+
+
+<script src="http://bp.yahooapis.com/2.9.9/browserplus-min.js">
+</script>  
+
+
+<script type="text/javascript">
+
+
+var msg = "" ;
+function cbfunc(o)
+{
+	for(var i = 0; i < 1; i++) {
+		var _elem = o.query.results.p[i];
+		var comment=_elem.content;
+		var highlight=_elem.span.content;
+		msg = highlight + comment;
+		document.write(msg);
+	}
+	var _div = document.createElement("div");
+	var _pre = document.createElement("pre");
+	_pre.appendChild(document.createTextNode(o.toSource()));
+	_div.appendChild(_pre);
+	document.body.appendChild(_div);
+}
+</script>
+<script type="text/javascript" src="http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.cricinfo.com%2Fsl-tri2010%2Fengine%2Fcurrent%2Fmatch%2F456664.html%3Finnings%3D1%3Bview%3Dcommentary%22%20and%20xpath%3D%22%2F%2Fp[%40class%3D%27commsText%27%20%20and%20.%2Fspan]%22%20&format=json&diagnostics=true&callback=cbfunc">
+
+</script>
+
+<script type="text/javascript">
+
+ 
+
+var ttsService = {  service: "Notify",    version: "2",    minversion: "2.0.16"  };
+
+
+// check for the presence of TextToSpeech, and dump results in the
+
+// specified div
+function checkForTextToSpeech(divName) {
+  BrowserPlus.isServiceActivated(    ttsService,    function() {      var _divName = divName;      return function(haveIt) {                        };    }());}
+
+
+BrowserPlus.init(function(res) {
+  if (res.success) {
+    checkForTextToSpeech("before");
+    BrowserPlus.require({services: [ ttsService ]},
+      function(r) {
+        checkForTextToSpeech("after");
+        if (r.success) {
+
+          BrowserPlus.Notify.show({"title":"Hello World!","message":msg,"icon":"http://l.yimg.com/a/i/us/bp/s/1.106/tool/notify-icon3.png"}, function(){});
+
+             }        });  }});
+
+
+</script>
